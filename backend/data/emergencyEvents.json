@@ -1,0 +1,30 @@
+[
+  {
+    "id": "EVT-1790270769666",
+    "userId": "user_001",
+    "eventType": "Abnormal movement + inactivity",
+    "timestamp": "2026-09-24T17:26:09.666Z",
+    "lastNormalActivity": "2026-09-24T19:52:00+05:30",
+    "location": "Home",
+    "latitude": 19.1234,
+    "longitude": 73.1234,
+    "response": "NO_RESPONSE",
+    "status": "ESCALATED",
+    "createdAt": "2026-09-24T17:26:09.666Z",
+    "updatedAt": "2026-09-24T17:27:38.106Z"
+  },
+  {
+    "id": "EVT-1790270931706",
+    "userId": "user_002",
+    "eventType": "Abnormal movement + inactivity",
+    "timestamp": "2026-09-24T17:28:51.706Z",
+    "lastNormalActivity": "2026-09-24T22:50:00+05:30",
+    "location": "Home",
+    "latitude": 19.1234,
+    "longitude": 73.1234,
+    "response": "HELP",
+    "status": "ESCALATED",
+    "createdAt": "2026-09-24T17:28:51.706Z",
+    "updatedAt": "2026-09-24T17:30:50.840Z"
+  }
+]
