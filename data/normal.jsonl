@@ -1,0 +1,15 @@
+{"timestamp": "2026-09-24T23:03:01.372890", "heart_rate": 78, "spo2": 98, "accel_x": 0.2, "accel_y": -0.09, "accel_z": 1.06, "activity": "walking"}
+{"timestamp": "2026-09-24T23:03:02.378724", "heart_rate": 83, "spo2": 98, "accel_x": 0.03, "accel_y": -0.05, "accel_z": 1.05, "activity": "resting"}
+{"timestamp": "2026-09-24T23:03:03.384185", "heart_rate": 88, "spo2": 97, "accel_x": 0.11, "accel_y": 0.2, "accel_z": 1.06, "activity": "resting"}
+{"timestamp": "2026-09-24T23:03:04.385394", "heart_rate": 72, "spo2": 97, "accel_x": 0.02, "accel_y": -0.02, "accel_z": 1.06, "activity": "resting"}
+{"timestamp": "2026-09-24T23:03:05.387328", "heart_rate": 89, "spo2": 97, "accel_x": -0.04, "accel_y": 0.0, "accel_z": 0.92, "activity": "resting"}
+{"timestamp": "2026-09-24T23:03:06.393304", "heart_rate": 75, "spo2": 99, "accel_x": 0.07, "accel_y": 0.18, "accel_z": 1.06, "activity": "resting"}
+{"timestamp": "2026-09-24T23:03:07.399101", "heart_rate": 87, "spo2": 96, "accel_x": -0.1, "accel_y": -0.06, "accel_z": 1.0, "activity": "resting"}
+{"timestamp": "2026-09-24T23:03:08.404633", "heart_rate": 83, "spo2": 100, "accel_x": 0.1, "accel_y": 0.2, "accel_z": 0.95, "activity": "walking"}
+{"timestamp": "2026-09-24T23:03:09.410084", "heart_rate": 82, "spo2": 98, "accel_x": 0.13, "accel_y": -0.09, "accel_z": 1.04, "activity": "resting"}
+{"timestamp": "2026-09-24T23:03:10.414045", "heart_rate": 84, "spo2": 96, "accel_x": 0.14, "accel_y": -0.02, "accel_z": 0.91, "activity": "walking"}
+{"timestamp": "2026-09-24T23:03:11.419577", "heart_rate": 80, "spo2": 99, "accel_x": 0.16, "accel_y": -0.02, "accel_z": 0.86, "activity": "walking"}
+{"timestamp": "2026-09-24T23:03:12.422269", "heart_rate": 74, "spo2": 97, "accel_x": 0.19, "accel_y": 0.06, "accel_z": 1.11, "activity": "resting"}
+{"timestamp": "2026-09-24T23:03:13.427822", "heart_rate": 88, "spo2": 99, "accel_x": -0.14, "accel_y": -0.18, "accel_z": 1.07, "activity": "resting"}
+{"timestamp": "2026-09-24T23:03:14.432935", "heart_rate": 87, "spo2": 100, "accel_x": 0.19, "accel_y": -0.02, "accel_z": 1.09, "activity": "walking"}
+{"timestamp": "2026-09-24T23:03:15.438409", "heart_rate": 72, "spo2": 98, "accel_x": -0.05, "accel_y": 0.06, "accel_z": 0.89, "activity": "walking"}

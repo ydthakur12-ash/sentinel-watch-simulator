@@ -1,0 +1,15 @@
+{"timestamp": "2026-09-24T23:06:46.419133", "heart_rate": 144, "spo2": 89, "accel_x": 0.34, "accel_y": -0.25, "accel_z": 1.03, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:47.423776", "heart_rate": 117, "spo2": 95, "accel_x": 0.19, "accel_y": -0.49, "accel_z": 1.01, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:48.429169", "heart_rate": 114, "spo2": 88, "accel_x": 0.19, "accel_y": -0.48, "accel_z": 0.8, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:49.434668", "heart_rate": 119, "spo2": 91, "accel_x": 0.42, "accel_y": 0.35, "accel_z": 0.83, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:50.437130", "heart_rate": 113, "spo2": 91, "accel_x": -0.15, "accel_y": -0.07, "accel_z": 0.93, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:51.442469", "heart_rate": 124, "spo2": 92, "accel_x": -0.28, "accel_y": 0.48, "accel_z": 1.03, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:52.446705", "heart_rate": 134, "spo2": 89, "accel_x": 0.39, "accel_y": -0.36, "accel_z": 0.94, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:53.452565", "heart_rate": 129, "spo2": 93, "accel_x": 0.43, "accel_y": 0.33, "accel_z": 0.96, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:54.453697", "heart_rate": 148, "spo2": 94, "accel_x": -0.16, "accel_y": 0.25, "accel_z": 0.83, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:55.460936", "heart_rate": 141, "spo2": 88, "accel_x": 0.43, "accel_y": 0.43, "accel_z": 1.2, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:56.466272", "heart_rate": 144, "spo2": 94, "accel_x": 0.42, "accel_y": 0.35, "accel_z": 1.13, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:57.471947", "heart_rate": 145, "spo2": 93, "accel_x": -0.31, "accel_y": 0.23, "accel_z": 0.9, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:58.477152", "heart_rate": 128, "spo2": 91, "accel_x": 0.16, "accel_y": 0.27, "accel_z": 1.07, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:06:59.479687", "heart_rate": 127, "spo2": 89, "accel_x": -0.22, "accel_y": -0.04, "accel_z": 1.01, "activity": "abnormal"}
+{"timestamp": "2026-09-24T23:07:00.485448", "heart_rate": 121, "spo2": 93, "accel_x": -0.17, "accel_y": -0.15, "accel_z": 0.92, "activity": "abnormal"}
