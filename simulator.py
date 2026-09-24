@@ -4,63 +4,94 @@ import time
 import os
 from datetime import datetime
 
-DATA_DIR = "data"
+
+# ==========================================
+# SENTINEL WATCH SIMULATOR V2
+# ==========================================
+
+DATA_DIR = "data/v2"
 os.makedirs(DATA_DIR, exist_ok=True)
 
 
-# ==============================
-# SAVE DATA
-# ==============================
+# ==========================================
+# HELPER FUNCTIONS
+# ==========================================
 
-def save_data(data, filename):
+def save_dataset(readings, filename):
     filepath = os.path.join(DATA_DIR, filename)
 
-    with open(filepath, "a") as file:
-        file.write(json.dumps(data) + "\n")
+    # V2 creates a fresh dataset each time
+    with open(filepath, "w") as file:
+        for reading in readings:
+            file.write(json.dumps(reading) + "\n")
 
 
-def output_data(data, filename):
-    print(json.dumps(data))
-    save_data(data, filename)
-
-
-# ==============================
-# GENERATE SENSOR READING
-# ==============================
-
-def generate_reading(heart_rate, spo2, accel_x, accel_y, accel_z, activity):
+def create_reading(heart_rate, spo2, accel_x, accel_y, accel_z, activity):
     return {
         "timestamp": datetime.now().isoformat(),
-        "heart_rate": heart_rate,
-        "spo2": spo2,
-        "accel_x": accel_x,
-        "accel_y": accel_y,
-        "accel_z": accel_z,
+        "heart_rate": int(heart_rate),
+        "spo2": int(spo2),
+        "accel_x": round(accel_x, 3),
+        "accel_y": round(accel_y, 3),
+        "accel_z": round(accel_z, 3),
         "activity": activity
     }
 
 
-# ==============================
+def clamp(value, minimum, maximum):
+    return max(minimum, min(value, maximum))
+
+
+def show_reading(reading):
+    print(json.dumps(reading))
+
+
+def wait():
+    time.sleep(1)
+
+
+# ==========================================
 # NORMAL ACTIVITY
-# ==============================
+# ==========================================
 
-def run_normal():
+def generate_normal():
 
-    print("\n🟢 NORMAL ACTIVITY")
-    print("-" * 40)
+    print("\n🟢 REALISTIC NORMAL ACTIVITY")
+    print("-" * 45)
 
-    for i in range(15):
+    readings = []
 
-        heart_rate = random.randint(70, 90)
-        spo2 = random.randint(96, 100)
+    heart_rate = 78
+    spo2 = 98
 
-        accel_x = round(random.uniform(-0.2, 0.2), 2)
-        accel_y = round(random.uniform(-0.2, 0.2), 2)
-        accel_z = round(random.uniform(0.85, 1.15), 2)
+    for i in range(20):
 
-        activity = random.choice(["walking", "resting"])
+        # Gradual heart-rate movement
+        heart_rate += random.uniform(-3, 3)
+        heart_rate = clamp(heart_rate, 70, 90)
 
-        data = generate_reading(
+        # Small natural SpO2 variation
+        spo2 += random.choice([-1, 0, 0, 0, 1])
+        spo2 = clamp(spo2, 96, 100)
+
+        activity = random.choice([
+            "resting",
+            "resting",
+            "walking",
+            "walking"
+        ])
+
+        # Movement changes gradually
+        if activity == "walking":
+            accel_x = random.uniform(-0.25, 0.25)
+            accel_y = random.uniform(-0.25, 0.25)
+            accel_z = random.uniform(0.80, 1.20)
+        else:
+            accel_x = random.uniform(-0.08, 0.08)
+            accel_y = random.uniform(-0.08, 0.08)
+            accel_z = random.uniform(0.92, 1.08)
+
+        reading = create_reading(
             heart_rate,
             spo2,
             accel_x,
@@ -69,171 +100,197 @@ def run_normal():
             activity
         )
 
-        output_data(data, "normal.jsonl")
+        readings.append(reading)
+        show_reading(reading)
+        wait()
 
-        time.sleep(1)
+    save_dataset(readings, "normal.jsonl")
 
-    print("\n========================================")
-    print("       SIMULATION COMPLETE")
-    print("========================================")
+    print("\n✅ V2 normal dataset saved.")
 
 
-# ==============================
+# ==========================================
 # FALL EVENT
-# ==============================
+# ==========================================
 
-def run_fall():
+def generate_fall():
 
-    print("\n🔴 FALL EVENT")
-    print("-" * 40)
+    print("\n🔴 REALISTIC FALL SEQUENCE")
+    print("-" * 45)
 
-    # Normal activity before fall
+    readings = []
+
+    heart_rate = 80
+    spo2 = 98
+
+    # --------------------------------------
+    # Phase 1: Normal movement
+    # --------------------------------------
+
+    print("\nPhase 1 → Normal movement")
+
     for i in range(10):
 
-        heart_rate = random.randint(70, 90)
-        spo2 = random.randint(96, 100)
+        heart_rate += random.uniform(-2, 3)
+        heart_rate = clamp(heart_rate, 72, 92)
 
-        accel_x = round(random.uniform(-0.2, 0.2), 2)
-        accel_y = round(random.uniform(-0.2, 0.2), 2)
-        accel_z = round(random.uniform(0.85, 1.15), 2)
+        spo2 += random.choice([-1, 0, 0, 1])
+        spo2 = clamp(spo2, 96, 100)
 
-        data = generate_reading(
+        reading = create_reading(
             heart_rate,
             spo2,
-            accel_x,
-            accel_y,
-            accel_z,
+            random.uniform(-0.25, 0.25),
+            random.uniform(-0.25, 0.25),
+            random.uniform(0.80, 1.20),
             "walking"
         )
 
-        output_data(data, "fall.jsonl")
+        readings.append(reading)
+        show_reading(reading)
+        wait()
 
-        time.sleep(1)
+    # --------------------------------------
+    # Phase 2: Sudden impact
+    # --------------------------------------
 
-    # Fall impact
-    data = generate_reading(
-        random.randint(105, 125),
-        random.randint(92, 96),
-        round(random.uniform(-1.5, 1.5), 2),
-        round(random.uniform(-1.5, 1.5), 2),
-        round(random.uniform(2.5, 4.0), 2),
-        "fall_detected"
+    print("\n⚠️ Phase 2 → Sudden impact")
+
+    reading = create_reading(
+        105,
+        95,
+        random.uniform(-1.5, 1.5),
+        random.uniform(-1.5, 1.5),
+        random.uniform(2.5, 4.0),
+        "fall_event"
     )
 
-    output_data(data, "fall.jsonl")
+    readings.append(reading)
+    show_reading(reading)
+    wait()
 
-    time.sleep(1)
+    # --------------------------------------
+    # Phase 3: Post-fall low movement
+    # --------------------------------------
 
-    # Post-fall inactivity
+    print("\n🟡 Phase 3 → Post-fall low movement")
+
     for i in range(15):
 
-        heart_rate = random.randint(80, 110)
-        spo2 = random.randint(93, 98)
+        heart_rate += random.uniform(-2, 2)
+        heart_rate = clamp(heart_rate, 70, 105)
 
-        accel_x = round(random.uniform(-0.05, 0.05), 2)
-        accel_y = round(random.uniform(-0.05, 0.05), 2)
-        accel_z = round(random.uniform(0.95, 1.05), 2)
+        spo2 += random.choice([-1, 0, 0, 1])
+        spo2 = clamp(spo2, 93, 98)
 
-        data = generate_reading(
+        reading = create_reading(
             heart_rate,
             spo2,
-            accel_x,
-            accel_y,
-            accel_z,
+            random.uniform(-0.025, 0.025),
+            random.uniform(-0.025, 0.025),
+            random.uniform(0.97, 1.03),
             "post_fall_inactive"
         )
 
-        output_data(data, "fall.jsonl")
+        readings.append(reading)
+        show_reading(reading)
+        wait()
 
-        time.sleep(1)
+    save_dataset(readings, "fall.jsonl")
 
-    print("\n========================================")
-    print("       SIMULATION COMPLETE")
-    print("========================================")
+    print("\n✅ V2 fall dataset saved.")
+    print("   Sequence: normal → impact → low movement")
 
 
-# ==============================
+# ==========================================
 # PROLONGED INACTIVITY
-# ==============================
+# ==========================================
 
-def run_inactivity():
+def generate_inactivity():
 
-    print("\n🟡 PROLONGED INACTIVITY")
-    print("-" * 40)
+    print("\n🟡 REALISTIC PROLONGED INACTIVITY")
+    print("-" * 45)
 
-    for i in range(15):
+    readings = []
 
-        heart_rate = random.randint(65, 85)
-        spo2 = random.randint(96, 100)
+    heart_rate = 72
+    spo2 = 98
 
-        accel_x = round(random.uniform(-0.03, 0.03), 2)
-        accel_y = round(random.uniform(-0.03, 0.03), 2)
-        accel_z = round(random.uniform(0.95, 1.05), 2)
+    for i in range(20):
 
-        data = generate_reading(
+        heart_rate += random.uniform(-1.5, 1.5)
+        heart_rate = clamp(heart_rate, 65, 82)
+
+        spo2 += random.choice([-1, 0, 0, 1])
+        spo2 = clamp(spo2, 96, 100)
+
+        reading = create_reading(
             heart_rate,
             spo2,
-            accel_x,
-            accel_y,
-            accel_z,
+            random.uniform(-0.025, 0.025),
+            random.uniform(-0.025, 0.025),
+            random.uniform(0.97, 1.03),
             "inactive"
         )
 
-        output_data(data, "inactivity.jsonl")
+        readings.append(reading)
+        show_reading(reading)
+        wait()
 
-        time.sleep(1)
+    save_dataset(readings, "inactivity.jsonl")
 
-    print("\n========================================")
-    print("       SIMULATION COMPLETE")
-    print("========================================")
+    print("\n✅ V2 inactivity dataset saved.")
 
 
-# ==============================
+# ==========================================
 # ABNORMAL HEALTH
-# ==============================
+# ==========================================
 
-def run_abnormal():
+def generate_abnormal():
 
-    print("\n🟠 ABNORMAL HEALTH")
-    print("-" * 40)
+    print("\n🟠 SIMULATED ABNORMAL HEALTH TREND")
+    print("-" * 45)
 
-    for i in range(15):
+    readings = []
 
-        heart_rate = random.randint(110, 150)
-        spo2 = random.randint(88, 95)
+    heart_rate = 95
+    spo2 = 95
 
-        accel_x = round(random.uniform(-0.2, 0.2), 2)
-        accel_y = round(random.uniform(-0.2, 0.2), 2)
-        accel_z = round(random.uniform(0.85, 1.15), 2)
+    for i in range(20):
 
-        activity = "abnormal_health"
+        # Gradual trend instead of random jumps
+        heart_rate += random.uniform(0, 3)
+        heart_rate = clamp(heart_rate, 95, 135)
 
-        data = generate_reading(
+        spo2 -= random.uniform(0, 0.4)
+        spo2 = clamp(spo2, 89, 95)
+
+        reading = create_reading(
             heart_rate,
             spo2,
-            accel_x,
-            accel_y,
-            accel_z,
-            activity
+            random.uniform(-0.20, 0.20),
+            random.uniform(-0.20, 0.20),
+            random.uniform(0.85, 1.15),
+            "abnormal_health"
         )
 
-        output_data(data, "abnormal.jsonl")
+        readings.append(reading)
+        show_reading(reading)
+        wait()
 
-        time.sleep(1)
+    save_dataset(readings, "abnormal.jsonl")
 
-    print("\n========================================")
-    print("       SIMULATION COMPLETE")
-    print("========================================")
+    print("\n✅ V2 abnormal-health dataset saved.")
 
 
-# ==============================
-# REPLAY SAVED DATASET
-# ==============================
+# ==========================================
+# REPLAY V2 DATASET
+# ==========================================
 
 def replay_dataset():
 
-    print("\n📂 SAVED DATASETS")
-    print("-" * 40)
+    print("\n📂 V2 SAVED DATASETS")
+    print("-" * 45)
 
     print("1. Normal")
     print("2. Fall")
@@ -257,56 +314,56 @@ def replay_dataset():
     filepath = os.path.join(DATA_DIR, filename)
 
     if not os.path.exists(filepath):
-        print("❌ Dataset not found:", filepath)
+        print("❌ Dataset does not exist yet.")
+        print("Generate the dataset first.")
         return
 
-    print("\n▶ REPLAYING:", filename)
-    print("-" * 40)
+    print(f"\n▶ REPLAYING V2: {filename}")
+    print("-" * 45)
 
     with open(filepath, "r") as file:
 
         for line in file:
 
-            data = json.loads(line)
+            reading = json.loads(line)
 
-            print(json.dumps(data))
-
-            time.sleep(1)
+            show_reading(reading)
+            wait()
 
     print("\n========================================")
-    print("         REPLAY COMPLETE")
+    print("         V2 REPLAY COMPLETE")
     print("========================================")
 
 
-# ==============================
+# ==========================================
 # MAIN MENU
-# ==============================
+# ==========================================
 
 def main():
 
     print("========================================")
-    print("     SENTINEL WATCH DATA SIMULATOR")
+    print("   SENTINEL WATCH DATA SIMULATOR V2")
     print("========================================")
 
-    print("1. Normal Activity")
-    print("2. Fall Event")
-    print("3. Prolonged Inactivity")
-    print("4. Abnormal Health")
-    print("5. Replay Saved Dataset")
+    print("1. Realistic Normal Activity")
+    print("2. Realistic Fall Sequence")
+    print("3. Realistic Prolonged Inactivity")
+    print("4. Simulated Abnormal Health Trend")
+    print("5. Replay V2 Saved Dataset")
 
-    choice = input("Select scenario (1-5): ")
+    choice = input("\nSelect scenario (1-5): ")
 
     if choice == "1":
-        run_normal()
+        generate_normal()
 
     elif choice == "2":
-        run_fall()
+        generate_fall()
 
     elif choice == "3":
-        run_inactivity()
+        generate_inactivity()
 
     elif choice == "4":
-        run_abnormal()
+        generate_abnormal()
 
     elif choice == "5":
         replay_dataset()
